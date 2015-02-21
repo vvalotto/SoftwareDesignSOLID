@@ -1,9 +1,8 @@
 from setuptools import setup
-import adquisidor
 
 setup(
     name='adquisidor',
-    version= adquisidor.__version__,
+    version='1.0.0',
     description='Modulo de defincion de la adquisicion',
     author='VV',
     author_email='vvalotto@gmail.com',

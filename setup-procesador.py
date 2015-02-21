@@ -1,9 +1,8 @@
 from setuptools import setup
-import procesador
 
 setup(
     name='procesador',
-    version=procesador.__version__,
+    version='2.0.0',
     description='Modulo de defincion del procesamiento',
     author='VV',
     author_email='vvalotto@gmail.com',

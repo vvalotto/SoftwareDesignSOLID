@@ -2,10 +2,10 @@ from setuptools import setup
 
 setup(
     name='SenialSOLID',
-    version='3.0.0',
-    description='SenialSOLID: Violacion al principio de OCP',
+    version='4.0.0',
+    description='SenialSOLID - : Aplicacion del Principio OCP - Solo Procesador',
     author='VV',
     author_email='vvalotto@gmail.com',
-    py_modules=['lanzador'],
+    py_modules=['lanzador', 'configurador'],
     entry_points={'console_scripts': 'lanzador = lanzador:Lanzador.ejecutar'}
 )

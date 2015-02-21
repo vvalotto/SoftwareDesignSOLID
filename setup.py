@@ -2,8 +2,8 @@ from setuptools import setup
 
 setup(
     name='SenialSOLID',
-    version='3.1.0',
-    description='SenialSOLID - Paso 4: Violacion al principio de OCP',
+    version='3.0.0',
+    description='SenialSOLID: Violacion al principio de OCP',
     author='VV',
     author_email='vvalotto@gmail.com',
     py_modules=['lanzador'],

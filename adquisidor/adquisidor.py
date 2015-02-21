@@ -1,7 +1,7 @@
 """
 Modulo que define la clase Adquisidor
 """
-from senial_SOLID.senial import Senial
+from modelo.senial import Senial
 
 
 class Adquisidor():

@@ -1,14 +1,11 @@
-from setuptools import setup, find_packages
-from codecs import open
+from setuptools import setup
 
 setup(
     name='SenialSOLID',
-    version='2.0.0',
-    description='SenialSOLID: Principio de Responsabilidad Unica',
+    version='2.1.0',
+    description='SenialSOLID - Paso 3: Aplicacion del Principio SRP - con Modulos compilados separados',
     author='VV',
     author_email='vvalotto@gmail.com',
-    packages=['senial_SOLID'],
     py_modules=['lanzador'],
-    entry_points = {'console_scripts':
-                    'lanzador = lanzador:Lanzador.ejecutar'}
+    entry_points={'console_scripts': 'lanzador = lanzador:Lanzador.ejecutar'}
 )

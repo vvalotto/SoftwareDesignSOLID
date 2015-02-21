@@ -3,12 +3,12 @@ from codecs import open
 
 setup(
     name='SenialSOLID',
-    version='0.0.1',
-    description='SenialSOLID: Violacion la principio de SRP',
+    version='2.0.0',
+    description='SenialSOLID: Principio de Responsabilidad Unica',
     author='VV',
     author_email='vvalotto@gmail.com',
-    packages=['senial_solid'],
+    packages=['senial_SOLID'],
     py_modules=['lanzador'],
-    entry_points = {'console_scripts' :
+    entry_points = {'console_scripts':
                     'lanzador = lanzador:Lanzador.ejecutar'}
 )

@@ -26,8 +26,8 @@ class Lanzador():
                 break
         return
 
-    # noinspection PyShadowingNames
-    def ejecutar(self):
+    @staticmethod
+    def ejecutar():
         """
         Se instancian las clases que participan del procesamiento
         """
@@ -40,13 +40,13 @@ class Lanzador():
         '''Paso 1 - Se obtiene la senial'''
         a.leer_senial()
         sa = a.obtener_senial_adquirida()
-        self.tecla()
+        Lanzador.tecla()
 
         '''Paso 2 - Se procesa la senial adquirida'''
         print("Incio - Paso 2 - Procesamiento")
         p.procesar_senial(sa)
         sp = p.obtener_senial_procesada()
-        self.tecla()
+        Lanzador.tecla()
 
         '''Paso 3 - Se muestran las seniales '''
         print("Incio - Paso 3 - Mostrar Senial")
@@ -55,4 +55,4 @@ class Lanzador():
 
 
 if __name__ == "__main__":
-    Lanzador().ejecutar()
+    Lanzador.ejecutar()

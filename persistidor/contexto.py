@@ -4,7 +4,9 @@ en algun tipo de almacen de persistencia (archivo plano, xml, serializa, base de
 """
 import os
 import pickle
+import datetime
 from persistidor.mapeador import *
+
 
 
 class BaseContexto(metaclass=ABCMeta):
@@ -15,11 +17,12 @@ class BaseContexto(metaclass=ABCMeta):
         """
         Se crea el contexto, donde el nombre es el recurso fisico donde residen los datos
         junto con esto se crea el recurso fisico con el nombre
-        :param nombre:
+        :param recurso:
         :return:
         """
         if recurso is None or recurso == "":
             raise Exception("Nombre de recurso vacio")
+        self._recurso = recurso
         return
 
     @property
@@ -40,6 +43,31 @@ class BaseContexto(metaclass=ABCMeta):
         """
         pass
 
+    def auditar(self, contexto, auditoria):
+        nombre = 'auditor.log'
+        try:
+            with open(nombre, 'a') as auditor:
+                auditor.writelines('------->\n')
+                auditor.writelines(str(contexto) + '\n')
+                auditor.writelines(str(datetime.datetime.now()) + '\n')
+                auditor.writelines(str(auditoria) + '\n')
+        except IOError as eIO:
+            raise eIO
+
+    def trazar(self, contexto, accion, mensaje):
+
+        nombre = 'logger.log'
+        try:
+            with open(nombre, 'a') as logger:
+                logger.writelines('------->\n')
+                logger.writelines('Accion: ' + str(accion))
+                logger.writelines(str(contexto) + '\n')
+                logger.writelines(str(datetime.datetime.now()) + '\n')
+                logger.writelines(str(mensaje) + '\n')
+        except IOError as eIO:
+            raise eIO
+
+
 class ContextoPickle(BaseContexto):
     """
     Clase de persistidor que persiste un tipo de objeto de manera serializada
@@ -48,14 +76,16 @@ class ContextoPickle(BaseContexto):
         """
         Se crea el archivo con el path donde se guardarán los archivos
         de la entidades a persistir
-        :param nombre: Path del repositorio de entidades
+        :param recurso: Path del repositorio de entidades
         :return:
         """
         try:
             super().__init__(recurso)
-            self._recurso = recurso
             if not os.path.isdir(recurso): os.mkdir(recurso)
+            self.auditar("Pickle", "Contexto Creado")
         except IOError as eIO:
+            self.trazar("Pickle", "Crear contexto", IOError.strerror)
+            print(eIO.strerror)
             raise eIO
 
     def persistir(self, entidad, id_entidad):
@@ -91,6 +121,31 @@ class ContextoPickle(BaseContexto):
             print(eVE)
         return e
 
+    def auditar(self, contexto, auditoria):
+        nombre = 'auditor.log'
+        try:
+            with open(nombre, 'a') as auditor:
+                auditor.writelines('------->\n')
+                auditor.writelines(str(contexto) + '\n')
+                auditor.writelines(str(datetime.datetime.now()) + '\n')
+                auditor.writelines(str(auditoria) + '\n')
+        except IOError as eIO:
+            raise eIO
+
+    def trazar(self, contexto, accion, mensaje):
+
+        nombre = 'logger.log'
+        try:
+            with open(nombre, 'a') as logger:
+                logger.writelines('------->\n')
+                logger.writelines('Accion: ' + str(accion))
+                logger.writelines(str(contexto) + '\n')
+                logger.writelines(str(datetime.datetime.now()) + '\n')
+                logger.writelines(str(mensaje) + '\n')
+        except IOError as eIO:
+            raise eIO
+
+
 class ContextoArchivo(BaseContexto):
     """
     Contexto del recurso de persistencia de tipo archivo
@@ -99,14 +154,15 @@ class ContextoArchivo(BaseContexto):
         """
         Se crea el archivo con el path donde se guardarán los archivos
         de la entidades a persistir
-        :param nombre: Path del repositorio de entidades
+        :param recurso: Path del repositorio de entidades
         :return:
         """
         try:
             super().__init__(recurso)
-            self._recurso = recurso
             if not os.path.isdir(recurso): os.mkdir(recurso)
+            self.auditar("Pickle", "Contexto Creado")
         except IOError as eIO:
+            self.trazar("Pickle", "Crear contexto", eIO)
             raise eIO
 
     def persistir(self, entidad, nombre_entidad):

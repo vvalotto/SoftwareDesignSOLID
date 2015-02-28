@@ -10,15 +10,15 @@ from modelo.senial import *
 
 
 def definir_senial_adquirir():
-    return Senial()
+    return SenialPila()
 
 
 def definir_senial_procesar():
-    return Senial()
+    return SenialPila()
 
 
 def definir_procesador():
-    return ProcesadorConUmbral(20, definir_senial_procesar())
+    return Procesador( definir_senial_procesar())
 
 
 def definir_adquisidor():
@@ -30,7 +30,7 @@ def definir_visualizador():
 
 
 def definir_contexto(recurso):
-    return ContextoArchivo(recurso)
+    return ContextoPickle(recurso)
 
 
 def definir_repositorio(contexto):
@@ -41,7 +41,7 @@ class Configurador(object):
     """
     El Configurador es un contenedor de objetos que participan de la solucion
     """
-    ctx_datos_adquisicion = definir_contexto('/Users/voval/tmp/datos/adq')
+    ctx_datos_adquisicion = definir_contexto('/Users/voval/tmp/adquisidor')
     ctx_datos_procesamiento = definir_contexto('/Users/voval/tmp/datos/pro')
 
     rep_adquisicion = definir_repositorio(ctx_datos_adquisicion)
@@ -51,10 +51,5 @@ class Configurador(object):
     procesador = definir_procesador()  # Se configura el tipo de procesador
     visualizador = definir_visualizador()  # Se configura el visualizador
 
-
     def __init__(self):
         pass
-
-
-if __name__ == '__main__':
-    c = Configurador()

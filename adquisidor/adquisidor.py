@@ -3,7 +3,7 @@ Se modifica la clase base y se extiende con la clase abstracta trazador
 """
 from abc import ABCMeta, abstractmethod
 from modelo.senial import *
-from utiles.trazador import *
+from utilidades.trazador import *
 
 
 class BaseAdquisidor(BaseTrazador, metaclass=ABCMeta):
@@ -125,7 +125,7 @@ class AdquisidorArchivo(BaseAdquisidor):
             super().trazar(AdquisidorArchivo,
                            'leer_senial',
                            'I/O Error: ' + str(ex))
-            raise 'I/O Error'
+            raise ex
         except ValueError as ex:
             super().trazar(AdquisidorArchivo,
                            'leer_senial',
@@ -134,7 +134,7 @@ class AdquisidorArchivo(BaseAdquisidor):
             raise ex
         except Exception as ex:
             super().trazar(AdquisidorArchivo,
-                            'leer_senial',
+                           'leer_senial',
                            'Error en la carga de datos: ' + str(ex))
             print('Error en la carga de datos')
             raise ex

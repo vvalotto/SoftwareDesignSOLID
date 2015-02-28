@@ -6,8 +6,8 @@ import os
 import pickle
 import datetime
 from persistidor.mapeador import *
-from utiles.trazador import *
-from utiles.auditor import *
+from utilidades.trazador import *
+from utilidades.auditor import *
 
 
 class BaseContexto(BaseTrazador, BaseAuditor, metaclass=ABCMeta):
@@ -82,7 +82,8 @@ class ContextoPickle(BaseContexto):
         """
         try:
             super().__init__(recurso)
-            if not os.path.isdir(recurso): os.mkdir(recurso)
+            if not os.path.isdir(recurso):
+                os.mkdir(recurso)
             self.auditar(self, "Se creo el contexto")
         except IOError as eIO:
             self.trazar("Pickle", "Crear contexto", eIO)
@@ -135,7 +136,8 @@ class ContextoArchivo(BaseContexto):
         """
         try:
             super().__init__(recurso)
-            if not os.path.isdir(recurso): os.mkdir(recurso)
+            if not os.path.isdir(recurso):
+                os.mkdir(recurso)
             self.auditar(self, "Se creo el contexto")
         except IOError as eIO:
             self.trazar("Archivo", "Crear contexto", eIO)

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='SenialSOLID',
-    version='5.0.0',
+    version='6.0.0',
     description='SenialSOLID - : Principio LSP - Violación',
     author='VV',
     author_email='vvalotto@gmail.com',

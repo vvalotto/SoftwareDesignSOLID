@@ -8,7 +8,6 @@ import datetime
 from persistidor.mapeador import *
 
 
-
 class BaseContexto(metaclass=ABCMeta):
     """
     Clase abstract que define la interfaz de la persistencia de datos
@@ -60,8 +59,8 @@ class BaseContexto(metaclass=ABCMeta):
         try:
             with open(nombre, 'a') as logger:
                 logger.writelines('------->\n')
-                logger.writelines('Accion: ' + str(accion))
-                logger.writelines(str(contexto) + '\n')
+                logger.writelines('Accion: ' + str(accion) + '\n')
+                logger.writelines('Contexto: ' + str(contexto) + '\n')
                 logger.writelines(str(datetime.datetime.now()) + '\n')
                 logger.writelines(str(mensaje) + '\n')
         except IOError as eIO:
@@ -82,10 +81,8 @@ class ContextoPickle(BaseContexto):
         try:
             super().__init__(recurso)
             if not os.path.isdir(recurso): os.mkdir(recurso)
-            self.auditar("Pickle", "Contexto Creado")
         except IOError as eIO:
-            self.trazar("Pickle", "Crear contexto", IOError.strerror)
-            print(eIO.strerror)
+            self.trazar("Pickle", "Crear contexto", eIO)
             raise eIO
 
     def persistir(self, entidad, id_entidad):
@@ -121,30 +118,6 @@ class ContextoPickle(BaseContexto):
             print(eVE)
         return e
 
-    def auditar(self, contexto, auditoria):
-        nombre = 'auditor.log'
-        try:
-            with open(nombre, 'a') as auditor:
-                auditor.writelines('------->\n')
-                auditor.writelines(str(contexto) + '\n')
-                auditor.writelines(str(datetime.datetime.now()) + '\n')
-                auditor.writelines(str(auditoria) + '\n')
-        except IOError as eIO:
-            raise eIO
-
-    def trazar(self, contexto, accion, mensaje):
-
-        nombre = 'logger.log'
-        try:
-            with open(nombre, 'a') as logger:
-                logger.writelines('------->\n')
-                logger.writelines('Accion: ' + str(accion))
-                logger.writelines(str(contexto) + '\n')
-                logger.writelines(str(datetime.datetime.now()) + '\n')
-                logger.writelines(str(mensaje) + '\n')
-        except IOError as eIO:
-            raise eIO
-
 
 class ContextoArchivo(BaseContexto):
     """
@@ -160,9 +133,8 @@ class ContextoArchivo(BaseContexto):
         try:
             super().__init__(recurso)
             if not os.path.isdir(recurso): os.mkdir(recurso)
-            self.auditar("Pickle", "Contexto Creado")
         except IOError as eIO:
-            self.trazar("Pickle", "Crear contexto", eIO)
+            self.trazar("Archivo", "Crear contexto", eIO)
             raise eIO
 
     def persistir(self, entidad, nombre_entidad):
@@ -198,7 +170,7 @@ class ContextoArchivo(BaseContexto):
             with open(ubicacion) as persitidor:
                 linea = persitidor.readline()
                 while linea != '':
-                    contenido = contenido + linea
+                    contenido += linea
                     linea = persitidor.readline()
             mapeador = MapeadorArchivo()
             return mapeador.venir_desde_persistidor(entidad, contenido)

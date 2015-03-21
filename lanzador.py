@@ -99,7 +99,7 @@ class Lanzador():
             print(ex)
             print("El programa termino con errores")
         finally:
-            print("Fin Programa - NoISP")
+            print("Fin Programa - DIP")
 
 
 if __name__ == "__main__":

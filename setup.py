@@ -2,8 +2,8 @@ from setuptools import setup
 
 setup(
     name='SenialSOLID',
-    version='8.0.0',
-    description='SenialSOLID - : Principio ISP - Violación',
+    version='9.0.0',
+    description='SenialSOLID - : Principio DIP',
     author='VV',
     author_email='vvalotto@gmail.com',
     py_modules=['lanzador', 'configurador'],

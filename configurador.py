@@ -36,5 +36,3 @@ class Configurador(object):
     procesador = definir_procesador()  # Se configura el tipo de procesador
     visualizador = definir_visualizador()  # Se configura el visualizador
 
-    def __init__(self):
-        pass

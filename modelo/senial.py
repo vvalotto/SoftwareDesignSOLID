@@ -119,10 +119,16 @@ class SenialPila(Senial):
     y extiende el metodo para sacar datos
     """
     def sacar_valor(self):
+        """
+        Saca el valor de la pila. Es el ultimo que ingreso. La lista de valores se reduce
+        cada vez que se saca un valor.
+        """
         try:
             if self._cantidad != 0:
                 self._cantidad -= 1
-                return self._valores[self._cantidad]
+                valor = self._valores[self._cantidad]
+                self._valores.remove(valor)
+                return valor
             else:
                 raise Exception('No hay valores para sacar')
         except Exception as e:
@@ -149,9 +155,14 @@ class SenialCola(Senial):
             self._valores.append(None)
 
     def sacar_valor(self):
+        """
+        Saca el valor de la cola. Es el primero que ingreso.La lista de valores se reduce
+        cada vez que se saca un valor.
+        """
         try:
             if (self._cabeza != self._cola) or ((self._cabeza == self._cola) and (self._cantidad != 0)):
                 valor = self._valores[self._cabeza]
+                self._valores[self._cabeza] = None
                 if self._cabeza == (self._tamanio - 1):
                     self._cabeza = 0
                 else:

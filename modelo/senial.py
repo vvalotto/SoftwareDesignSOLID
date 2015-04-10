@@ -140,7 +140,7 @@ class SenialCola(Senial):
     Clase de tipo Cola que hereda de la clase senial los miembros variables de instancia
     y extiende el metodo para sacar datos
     """
-    def __init__(self, tamanio):
+    def __init__(self, tamanio=10):
         """
         Construye la instancia de la estructura cola circular, donde se indica el
         tamanio de la cola y se inicializan los punteros de la cabeza y cola

@@ -111,8 +111,8 @@ class SenialBase(metaclass=ABCMeta):
         try:
             valor = self._valores[indice]
             return valor
-        except Exception:
-            print("Error: ", Exception.__cause__)
+        except Exception as ex:
+            print("Error: ", ex.args)
             return None
 
     def __str__(self):
@@ -150,15 +150,19 @@ class Senial(SenialBase):
         :return: dato extraido
         """
         valor = None
-        if self._cantidad > 0:
-            valor = self.obtener_valor(indice)
-            self._valores.remove(valor)
-            self._cantidad -= 1
+        try:
+            if self._cantidad > 0:
+                valor = self.obtener_valor(indice)
+                self._valores.remove(valor)
+                self._cantidad -= 1
 
+                return valor
+            else:
+                print('No hay nada para sacar')
             return valor
-        else:
-            print('No hay nada para sacar')
-        return valor
+        except Exception as ex:
+            print("Error: ", ex.args)
+            return valor
 
 
 class SenialPila(Senial):
@@ -179,7 +183,7 @@ class SenialPila(Senial):
 
 
 class SenialCola(Senial):
-    def __init__(self, tamanio):
+    def __init__(self, tamanio=10):
         super().__init__(tamanio)
         self._valores = deque([])
 

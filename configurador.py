@@ -13,7 +13,7 @@ def definir_senial_adquirir():
 
 
 def definir_senial_procesar():
-    return Senial()
+    return SenialPila()
 
 
 def definir_procesador():

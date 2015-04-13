@@ -1,12 +1,14 @@
 from abc import ABCMeta, abstractmethod
 from utilidades.auditor import *
 from utilidades.trazador import *
+from modelo.senial import *
 import datetime
 
 
 class BaseRepositorio(metaclass=ABCMeta):
     def _init__(self, contexto):
         self._contexto = contexto
+        self._entidad = None
     """
     Define la interfaz para el acceso a la persistencia de datos
     """
@@ -39,6 +41,7 @@ class RepositorioSenial(BaseAuditor, BaseTrazador, BaseRepositorio):
         :return:
         """
         super()._init__(ctx)
+        self._entidad = Senial()
 
     def guardar(self, senial):
         """
@@ -56,7 +59,7 @@ class RepositorioSenial(BaseAuditor, BaseTrazador, BaseRepositorio):
             raise ex
         return
 
-    def obtener(self, senial, id_senial):
+    def obtener(self, id_senial):
         """
         Implementa la recuperacion de la entidad (senial)
         :param senial:
@@ -64,15 +67,15 @@ class RepositorioSenial(BaseAuditor, BaseTrazador, BaseRepositorio):
         :return:
         """
         try:
-            self.auditar(senial,  "Antes de recuperar la senial")
-            senial_recuperada = self._contexto.recuperar(senial, id_senial)
-            self.auditar(senial,  "Se realizó la recuperacion")
+            self.auditar(self._entidad,  "Antes de recuperar la senial")
+            senial_recuperada = self._contexto.recuperar(self._entidad, id_senial)
+            self.auditar(self._entidad,  "Se realizó la recuperacion")
             return senial_recuperada
         except Exception:
-            self.auditar(senial,  "Error al recuperar")
+            self.auditar(self._entidad,  "Error al recuperar")
             msj = 'Error al leer una senial persistada: '
             msj += ' - ID: ' + str(id_senial)
-            self.trazar(senial, "obtener", msj)
+            self.trazar(self._entidad, "obtener", msj)
             raise Exception
 
     def auditar(self, senial, auditoria):

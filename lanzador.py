@@ -79,7 +79,7 @@ class Lanzador():
             '''Paso 2 - Se procesa la señal adquirida'''
             print('>')
             print("Incio - Paso 2 - Procesamiento")
-            para_procesar = rep_adq.obtener(Senial(), sa.id)
+            para_procesar = rep_adq.obtener(sa.id)
             p.procesar(para_procesar)
             sp = p.obtener_senial_procesada()
             Lanzador.tecla()
@@ -91,8 +91,8 @@ class Lanzador():
 
             '''Paso 3 - Se muestran las seniales '''
             print("Incio - Paso 3 - Mostrar Senial")
-            adquirida = rep_adq.obtener(Senial(), sa.id)
-            procesada = rep_pro.obtener(Senial(), sp.id)
+            adquirida = rep_adq.obtener(sa.id)
+            procesada = rep_pro.obtener(sp.id)
             v.mostrar_datos(adquirida)
             print('----->')
             v.mostrar_datos(procesada)
@@ -102,7 +102,7 @@ class Lanzador():
             print(ex)
             print("El programa termino con errores")
         finally:
-            print("Fin Programa - NoISP")
+            print("Fin Programa - ISP")
 
 
 if __name__ == "__main__":

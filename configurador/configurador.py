@@ -130,8 +130,8 @@ def definir_contexto(recurso):
         raise ex
 
 
-def definir_repositorio(contexto):
-    return RepositorioSenial(contexto)
+def definir_repositorio(contexto, tipo_senial):
+    return RepositorioSenial(contexto, tipo_senial)
 
 
 class Configurador(object):
@@ -146,8 +146,8 @@ class Configurador(object):
     ctx_datos_procesamiento = definir_contexto(obtener_dir_datos() + '/pro')
     print("Contexto para adquisicion:", ctx_datos_adquisicion.__class__)
 
-    rep_adquisicion = definir_repositorio(ctx_datos_adquisicion)
-    rep_procesamiento = definir_repositorio(ctx_datos_procesamiento)
+    rep_adquisicion = definir_repositorio(ctx_datos_adquisicion, definir_senial_adquirir())
+    rep_procesamiento = definir_repositorio(ctx_datos_procesamiento, definir_senial_procesar())
 
     adquisidor = definir_adquisidor()  # Se configura el tipo de adquisidor
     print("Tipo adquisidor: ", adquisidor.__class__)

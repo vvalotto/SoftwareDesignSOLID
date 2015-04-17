@@ -179,7 +179,7 @@ class SenialPila(Senial):
 
 
 class SenialCola(Senial):
-    def __init__(self, tamanio):
+    def __init__(self, tamanio=10):
         super().__init__(tamanio)
         self._valores = deque([])
 

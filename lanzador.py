@@ -8,9 +8,10 @@ import visualizador
 import modelo
 import persistidor
 import utilidades
+import configurador
 
 from datetime import datetime
-from configurador import *
+from configurador.configurador import *
 
 
 class Lanzador():
@@ -42,6 +43,7 @@ class Lanzador():
         print("persistidor: " + persistidor.__version__)
         print("modelo: " + modelo.__version__)
         print("utiles: " + utilidades.__version__)
+        print("configurador: " + configurador.__version__)
         print()
 
     @staticmethod
@@ -78,7 +80,7 @@ class Lanzador():
             '''Paso 2 - Se procesa la señal adquirida'''
             print('>')
             print("Incio - Paso 2 - Procesamiento")
-            para_procesar = rep_adq.obtener(Senial(), sa.id)
+            para_procesar = rep_adq.obtener(sa.id)
             p.procesar(para_procesar)
             sp = p.obtener_senial_procesada()
             Lanzador.tecla()
@@ -90,8 +92,8 @@ class Lanzador():
 
             '''Paso 3 - Se muestran las seniales '''
             print("Incio - Paso 3 - Mostrar Senial")
-            adquirida = rep_adq.obtener(Senial(), sa.id)
-            procesada = rep_pro.obtener(Senial(), sp.id)
+            adquirida = rep_adq.obtener(sa.id)
+            procesada = rep_pro.obtener(sp.id)
             v.mostrar_datos(adquirida)
             print('----->')
             v.mostrar_datos(procesada)

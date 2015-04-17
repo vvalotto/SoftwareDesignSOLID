@@ -1,15 +1,13 @@
 #!/usr/local/bin/python3.4
 __author__ = 'Victor Valotto'
-__version__ = '9.0.0'
+__version__ = '9.1.0'
 
 import adquisidor
 import procesador
 import visualizador
-import modelo
 import persistidor
 import utilidades
-import configurador
-
+import modelo
 from datetime import datetime
 from configurador.configurador import *
 
@@ -43,7 +41,6 @@ class Lanzador():
         print("persistidor: " + persistidor.__version__)
         print("modelo: " + modelo.__version__)
         print("utiles: " + utilidades.__version__)
-        print("configurador: " + configurador.__version__)
         print()
 
     @staticmethod
@@ -54,12 +51,19 @@ class Lanzador():
         try:
             Lanzador.informar_versiones()
             Lanzador.tecla()
+            Configurador.inicializar()
 
-            a = Configurador.adquisidor
-            p = Configurador.procesador
-            v = Configurador.visualizador
-            rep_adq = Configurador.rep_adquisicion
-            rep_pro = Configurador.rep_procesamiento
+            a = Configurador.obtener_tipo("adquisidor")
+            p = Configurador.obtener_tipo("procesador")
+            v = Configurador.obtener_tipo("visualizador")
+            rep_adq = Configurador.obtener_tipo("repositorio_adquisicion")
+            rep_pro = Configurador.obtener_tipo("repositorio_procesamiento")
+
+            print(a)
+            print(p)
+            print(v)
+            print(rep_adq)
+            print(rep_pro)
 
             'Obtencion de la señal y guardado'
             print('>')
@@ -100,7 +104,7 @@ class Lanzador():
             print('----->')
 
         except Exception as ex:
-            print(ex)
+            print(ex.args)
             print("El programa termino con errores")
         finally:
             print("Fin Programa - DIP")

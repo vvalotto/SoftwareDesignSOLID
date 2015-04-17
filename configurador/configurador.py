@@ -36,7 +36,7 @@ def obtener_senial_config(senial_config):
         raise ex
 
 
-def obtener_fltros_config(filtro_config):
+def obtener_filtros_config(filtro_config):
     """
     Recupera desde la configuración el tipo de procesador y los
     parametros asociado
@@ -83,7 +83,7 @@ def definir_procesador():
     Luego llama la factory para que devuelva el tipo de procesador creado
     """
     try:
-        procesador, params = obtener_fltros_config("procesador")
+        procesador, params = obtener_filtros_config("procesador")
         # Crea el procesador
         return FactoryProcesador.obtener_procesador(procesador,
                                                     definir_senial_procesar(),
@@ -99,7 +99,7 @@ def definir_adquisidor():
     Luego llama la factory para que devuelva el tipo de adquisidor creado
     """
     try:
-        adquisidor, params = obtener_fltros_config("adquisidor")
+        adquisidor, params = obtener_filtros_config("adquisidor")
         # Crea el procesador
         return FactoryAdquisidor.obtener_adquisidor(adquisidor,
                                                     definir_senial_adquirir(),
@@ -138,26 +138,39 @@ class Configurador(object):
     """
     El Configurador es un contenedor de objetos que participan de la solucion
     """
+    componentes = {}
+
+    """
+    El Configurador es un contenedor de objetos que participan de la solucion
+    """
     titulo = "Configuración de los objetos que participan"
     print(titulo)
     print('*' * len(titulo))
-
-    ctx_datos_adquisicion = definir_contexto(obtener_dir_datos() + '/adq')
-    ctx_datos_procesamiento = definir_contexto(obtener_dir_datos() + '/pro')
-    print("Contexto para adquisicion:", ctx_datos_adquisicion.__class__)
-
-    rep_adquisicion = definir_repositorio(ctx_datos_adquisicion, definir_senial_adquirir())
-    rep_procesamiento = definir_repositorio(ctx_datos_procesamiento, definir_senial_procesar())
-
-    adquisidor = definir_adquisidor()  # Se configura el tipo de adquisidor
-    print("Tipo adquisidor: ", adquisidor.__class__)
-    print("Senial para adquirir: ", adquisidor._senial.__class__)
-    procesador = definir_procesador()  # Se configura el tipo de procesador
-    print("Tipo procesador: ", procesador.__class__)
-    print("Senial para adquirir: ", procesador._senial_procesada.__class__)
-    visualizador = definir_visualizador()  # Se configura el visualizador
-
     print()
 
-    def __init__(self):
-        pass
+    @staticmethod
+    def inicializar():
+        Configurador.agregar("adquisidor", definir_adquisidor())
+        Configurador.agregar("procesador", definir_procesador())
+        Configurador.agregar("visualizador", definir_visualizador())
+        Configurador.agregar("contexto_datos_adquiridos", definir_contexto(obtener_dir_datos() + '/adq'))
+        Configurador.agregar("contexto_datos_procesados", definir_contexto(obtener_dir_datos() + '/pro'))
+        Configurador.agregar("repositorio_adquisicion",
+                             definir_repositorio(Configurador.obtener_tipo("contexto_datos_adquiridos"),
+                                                 definir_senial_adquirir()
+                                                )
+                             )
+        Configurador.agregar("repositorio_procesamiento",
+                             definir_repositorio(Configurador.obtener_tipo("contexto_datos_procesados"),
+                                                 definir_senial_procesar()
+                                                )
+                             )
+        return
+
+    @staticmethod
+    def agregar(tipo, clase):
+        Configurador.componentes[tipo] = clase
+
+    @staticmethod
+    def obtener_tipo(tipo):
+        return Configurador.componentes[tipo]
